@@ -17,7 +17,7 @@ sudo apt-get install python3 python3-dev python3-pip libxml2-dev libxslt1-dev zl
 Scrapy can then be installed using the following command:
 
 ```bash
-pip install scrapy
+sudo apt install python3-scrapy
 ```
 
 For more information about the installation process of scrapy, see [here](https://docs.scrapy.org/en/latest/intro/install.html#intro-install) .
