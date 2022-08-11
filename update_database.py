@@ -1,5 +1,4 @@
-from importlib.resources import path
-import os
+import os 
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -9,6 +8,7 @@ args = parser.parse_args()
 input_vendor = args.vendor
 input_vendor = input_vendor.lower()
 
-os.chdir("./FirmwareScraper")
 
-exit = os.system(f"TMPDIR=$HOME/tmp scrapy crawl {input_vendor} -o {input_vendor}.json")
+os.system(f'python3 scrape_from.py -v {input_vendor}')
+os.system(f'python3 copy_from_scraper_to_hrw.py -v {input_vendor}')
+

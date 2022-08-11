@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 from pathlib import Path
 
 def MkOutputDir(vendor_dict):
@@ -69,7 +70,6 @@ def WriteVendor(vendor, model, dir):
 
 
 def WriteDeviceClass(device_class, model, dir): 
-    
     try:
         f1 = open(f'{dir}/{model}.md','at')
         f1.write(f"\n## {device_class}\n")
@@ -88,18 +88,15 @@ def WriteDevice(device, model, dir):
             print("device already in list")
         # if just another version of the firmware is in the MD
         else:
-            print("ELSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             filepath = f'[{device["filepath"]}](../../../../firmware_files/{device["filepath"]})'
             url = f'[{device["filepath"]}]({device["url"]})'
             
             try:
                 f1 = open(f'{dir}/{model}.md','a')
-                print("SCHREIB!!!!!!!111111111111111111111111111111111111111111111111")
                 f1.write(f'|{device["model"]}|{device["version"]}|{device["date"]}|{url}|{filepath}|{device["checksum"]}|\n')
                 f1.close()
             except BaseException as err:
                 print(f'(Error: {err})')
-
 
     # if model is NOT in MD:
     else:
@@ -118,14 +115,14 @@ def WriteDevice(device, model, dir):
        
 
 ## Start
-# parser = argparse.ArgumentParser()
-# parser.add_argument('-v', dest='vendor', required=True)
-# args = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument('-v', dest='vendor', required=True)
+args = parser.parse_args()
 
-# input_vendor = args.vendor
-# input_vendor = input_vendor.lower()
+input_vendor = args.vendor
+input_vendor = input_vendor.lower()
 
-input_vendor = "zyxel"
+# input_vendor = "zyxel"
 
 try:
     with open(f'router_json/{input_vendor}.json', 'r') as read_file:
@@ -157,4 +154,5 @@ for devices in device_json_list:
     if not mdExisted:
         WriteVendor(device["vendor"],device["model"],output_dir)
         WriteDeviceClass(device["device_class"],device["model"], output_dir)
+        
     WriteDevice(device, device["model"],output_dir)    

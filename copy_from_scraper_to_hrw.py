@@ -33,6 +33,14 @@ for file in list_of_files:
 print(Path(scraper/f'{input_vendor}.json'))
 
 if os.path.isfile(Path(scraper/f'{input_vendor}.json')):
+    if os.path.isfile(Path(router_json/f'{input_vendor}.json')):
+        try:
+            os.remove(Path(router_json/f'{input_vendor}.json'))
+        except OSError as e:
+            print(e)
+        else:
+            print("File is deleted successfully")
+
     shutil.move(Path(scraper/f'{input_vendor}.json'), router_json)
 
-os.system(f'sudo python3 json_to_markdown.py -v {input_vendor}')
+os.system(f'python3 json_to_markdown.py -v {input_vendor}')
