@@ -8,15 +8,8 @@ Ubuntu 14.04 and above
 Some packages need to be installed using apt-get/apt before installing scrapy
 
 ```bash
-sudo apt-get install python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev
+sudo apt-get install python3 python3-dev python3-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev
 ```
-
-As python 2 is almost at EOL, python3 additionally needs python3-dev
-
-```bash
-sudo apt-get install python3 python3-dev
-```
-
 
 
 #### Scrapy
@@ -24,7 +17,7 @@ sudo apt-get install python3 python3-dev
 Scrapy can then be installed using the following command:
 
 ```bash
-pip install scrapy
+sudo apt install python3-scrapy
 ```
 
 For more information about the installation process of scrapy, see [here](https://docs.scrapy.org/en/latest/intro/install.html#intro-install) .
