@@ -50,8 +50,6 @@ def KeywordInFile(keyword,device,dir):
         for line in lines:
             if keyword in line:
                 keyword_in_md = True
-                print(f"keyword: {keyword}")
-                print(line)
                 return keyword_in_md
 
         return keyword_in_md
@@ -80,10 +78,8 @@ def WriteDeviceClass(device_class, model, dir):
 
 def WriteDevice(device, model, dir):
     # if model is in MD:
-    print(f'{device["model"]}')
     if KeywordInFile(f'{device["model"]}',model, dir):
         # if firmware version of model is in MD:
-        print(f'|{device["model"]}|{device["version"]}')
         if KeywordInFile(f'|{device["model"]}|{device["version"]}', model, dir):
             print("device already in list")
         # if just another version of the firmware is in the MD
@@ -100,7 +96,6 @@ def WriteDevice(device, model, dir):
 
     # if model is NOT in MD:
     else:
-        print("ELSE")
         filepath = f'[{device["filepath"]}](../../../../firmware_files/{device["filepath"]})'
         url = f'[{device["filepath"]}]({device["url"]})'
 
