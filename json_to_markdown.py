@@ -1,6 +1,7 @@
 import json
 import os
 import argparse
+import db_script
 from pathlib import Path
 
 def MkOutputDir(vendor_dict):
@@ -79,11 +80,10 @@ def WriteDeviceClass(device_class, model, dir):
 def WriteDevice(device, model, dir):
     # if model is in MD:
     if KeywordInFile(f'{device["model"]}',model, dir):
-        # if firmware version of model is in MD:
-        if KeywordInFile(f'|{device["model"]}|{device["version"]}', model, dir):
-            print("device already in list")
-        # if just another version of the firmware is in the MD
-        else:
+        # if firmware version of model is NOT in MD:
+        if not KeywordInFile(f'|{device["model"]}|{device["version"]}', model, dir):
+            
+        # just another version of the firmware is in the MD
             filepath = f'[{device["filepath"]}](../../../../firmware_files/{device["filepath"]})'
             url = f'[{device["filepath"]}]({device["url"]})'
             
@@ -117,8 +117,6 @@ args = parser.parse_args()
 input_vendor = args.vendor
 input_vendor = input_vendor.lower()
 
-# input_vendor = "zyxel"
-
 try:
     with open(f'router_json/{input_vendor}.json', 'r') as read_file:
         device_json_list = json.load(read_file)
@@ -140,7 +138,11 @@ for devices in device_json_list:
     device["url"] = devices['files'][0]['url']
     device["filepath"] = devices['files'][0]['path']
     device["checksum"] = devices['files'][0]['checksum']
-    # device["status"] = devices['files'][0]['status']
+    
+    #enter data in db
+    db_script.InsertVendor(device['vendor'])
+    db_script.InsertDeviceClass(device['vendor'],device['device_class'])
+    db_script.InsertDevice(device['vendor'],device['device_class'], device['model'], device['version'], device['date'], device['url'], device['filepath'], device['checksum'])
 
     output_dir = MkOutputDir(device)
 
