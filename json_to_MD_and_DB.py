@@ -17,10 +17,7 @@ def MkOutputDir(vendor_dict):
     output_dir = {}
     output_dir["vendor"]= Path(f'{wiki_dir}/{vendor_dict["vendor"]}')
     output_dir["device_class"] = Path(f'{wiki_dir}/{vendor_dict["vendor"]}/{vendor_dict["device_class"]}')
-    output_dir["model"] = Path(f'{wiki_dir}/{vendor_dict["vendor"]}/{vendor_dict["device_class"]}/{vendor_dict["model"]}')
-
-    if not Path(wiki_dir+"/_index.md").is_file():
-        Path(wiki_dir+"/_index.md").touch()        
+    output_dir["model"] = Path(f'{wiki_dir}/{vendor_dict["vendor"]}/{vendor_dict["device_class"]}/{vendor_dict["model"]}')     
 
     if output_dir["vendor"].is_dir():
         if output_dir["device_class"].is_dir():
