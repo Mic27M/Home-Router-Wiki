@@ -1,10 +1,7 @@
-from sre_constants import SUCCESS
-import statistics
 import sqlalchemy
-from sqlalchemy import func
 
 engine = sqlalchemy.create_engine('sqlite:///Home_Router_DB.sqlite')
-conn = engine.connect()
+connection = engine.connect()
 
 
 meta_data = sqlalchemy.MetaData(bind=engine)
@@ -17,7 +14,7 @@ db_info = meta_data.tables['db_info']
 
 def InsertVendor(vend):
     stm = vendor.select()
-    result = conn.execute(stm)
+    result = connection.execute(stm)
     # Test if vendor is alredy in table
     test = 0
     for row in result:
@@ -25,13 +22,13 @@ def InsertVendor(vend):
             test = 1
     if test !=1:
         stm = vendor.insert().values({"name": vend})
-        conn.execute(stm)
+        connection.execute(stm)
                 
 
 def InsertDeviceClass(vend, dev_class):
     
     stm = device_class.select()
-    result = conn.execute(stm)
+    result = connection.execute(stm)
     # Test if device_class is alredy in table
     test = 0
     for row in result:
@@ -39,12 +36,12 @@ def InsertDeviceClass(vend, dev_class):
             test = 1
     if test !=1:
         stm = device_class.insert().values({"vendor": vend, "device_class": dev_class})
-        conn.execute(stm)
+        connection.execute(stm)
 
 
 def InsertDevice(vend, dev_class, dev_name, fw_version, date, url, filepath, checksum):
     stm = device.select()
-    result = conn.execute(stm)
+    result = connection.execute(stm)
     # Test if device is alredy in table
     test = 0
     for row in result:
@@ -52,17 +49,17 @@ def InsertDevice(vend, dev_class, dev_name, fw_version, date, url, filepath, che
             test = 1
     if test !=1:
         stm = device.insert().values({"vendor": vend, "device_class": dev_class, "device_name": dev_name, "fw_version":fw_version, "date": date, "url": url, "filepath": filepath, "checksum": checksum, "in in DB since": "now" })
-        conn.execute(stm)
+        connection.execute(stm)
 
 
 def InsertDBInfo(start, stop, stats, logfile, success):    
     stm = db_info.insert().values({"start_time": start, "stop_time": stop, "statistic": stats, "logfile": logfile, "success": success})
-    conn.execute(stm)
+    connection.execute(stm)
     
 
 def GetNextDBInfoID():
     stm = db_info.select()
-    result = conn.execute(stm)
+    result = connection.execute(stm)
 
     all_id = []
     for row in result:
@@ -75,7 +72,7 @@ def GetNextDBInfoID():
 
 def CountDBEntries(db):
     stm = db.select()
-    result = conn.execute(stm)
+    result = connection.execute(stm)
     count = 0
     for row in result:
         count = count + 1
@@ -100,7 +97,3 @@ def StatisticDBInfo(vendor_start, vendor_stop, dv_class_start, dv_class_stop, de
         diff_stat = diff_stat + f" new devices: {device_diff} "
 
     return diff_stat
-
-
-
-# GetNextDBInfoID()

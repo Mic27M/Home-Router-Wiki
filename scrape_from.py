@@ -11,10 +11,8 @@ def ScrapeFirmware(vendor):
     # scrape_command_args = shlex.split(scrape_command)
     p2 = subprocess.Popen(scrape_command, shell=True)
     p2.wait()
-
     os.chdir("..")
     
-
 
 parser = argparse.ArgumentParser()
 

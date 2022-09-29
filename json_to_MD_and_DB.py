@@ -7,8 +7,6 @@ import logging
 import log
 from pathlib import Path
 
-print(log.current_log)
-
 logging.basicConfig(filename=f'{log.current_log}', level=logging.INFO)
 
 def MkOutputDir(vendor_dict):
@@ -167,7 +165,6 @@ def CopyJsonEntriesToMDAndDB(vendor):
         except BaseException as err:
            logging.warning(f"Problem with filepath..{err}")
             
-
          #enter data in db
         try:
             db_script.InsertVendor(device['vendor'])

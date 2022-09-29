@@ -1,7 +1,7 @@
 import argparse
 import datetime
-import db_script
 import logging
+import db_script
 import log
 import scrape_from
 import move_from_scraper_to_hrw
@@ -14,7 +14,7 @@ logging.basicConfig(filename=f'{log.current_log}', level=logging.INFO)
 start_time = datetime.datetime.now().isoformat()
 entries_db_vendor_start = db_script.CountDBEntries(db_script.vendor)
 entries_db_dv_class_start = db_script.CountDBEntries(db_script.device_class)
-entries_dB_devices__start = db_script.CountDBEntries(db_script.device)
+entries_dB_device_start = db_script.CountDBEntries(db_script.device)
 
 logging.info(f'----------database update started at {start_time}')
 
@@ -54,12 +54,12 @@ entries_db_vendor_stop = db_script.CountDBEntries(db_script.vendor)
 entries_db_dv_class_stop = db_script.CountDBEntries(db_script.device_class)
 entries_db_devices_stop = db_script.CountDBEntries(db_script.device)
 
-successs = log.UpdateSuccess()
+success = log.UpdateSuccess()
 
-db_stats = db_script.StatisticDBInfo(entries_db_vendor_start, entries_db_vendor_stop, entries_db_dv_class_start, entries_db_dv_class_stop, entries_dB_devices__start, entries_db_devices_stop)
+db_stats = db_script.StatisticDBInfo(entries_db_vendor_start, entries_db_vendor_stop, entries_db_dv_class_start, entries_db_dv_class_stop, entries_dB_device_start, entries_db_devices_stop)
 
 try:
-    db_script.InsertDBInfo(start_time, stop_time, db_stats, current_log, successs)
+    db_script.InsertDBInfo(start_time, stop_time, db_stats, current_log, success)
 except BaseException as err:
     logging.warning(err)
 
